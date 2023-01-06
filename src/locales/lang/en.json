@@ -1,0 +1,40 @@
+{
+  "nav": {
+    "home": "Off-Chain Metrics",
+    "OffChain": {
+      "OffChain": "Off-Chain Metrics",
+      "item1": "NFT Sales",
+      "item2": "NFT Minters",
+      "item3": "NFT Royalties",
+      "item4": "NFT Collections",
+      "item5": "NFT Collection Owners",
+      "item6": "Credit Card Transactions"
+    },
+    "singleMenuItem": "Whitelist/Blacklist Contract",
+    "collapseMenu": {
+      "collapseMenu": "On-Chain Metrics",
+      "item1": "ERC20",
+      "item2": "Normal Transaction",
+      "item3": "Internal Transaction",
+      "item4": "ERC721"
+    },
+    "groupMenu": {
+      "groupMenu": "Group menu",
+      "single": "Group single Menu Item",
+      "collapse": {
+        "collapse": "Group collapse menu",
+        "item1": "Group collapse menu item 1",
+        "item2": "Group collapse menu item 2",
+        "item3": "Group collapse menu item 3",
+        "item4": "Group collapse menu item 4"
+      }
+    },
+    "docs": {
+      "guide": "Guide",
+      "documentation": "Documentation",
+      "sharedComponentDoc": "Shared Component",
+      "utilsDoc": "Utilities",
+      "changeLog": "Changelog"
+    }
+  }
+}
