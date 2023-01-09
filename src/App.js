@@ -10,7 +10,7 @@ import mockServer from "./mock";
 import appConfig from "configs/app.config";
 import "./locales";
 
-const environment = process.env.REACT_APP_BACKEND_URL;
+const environment = process.env.NODE_ENV;
 
 /**
  * Set enableMock(Default false) to true at configs/app.config.js

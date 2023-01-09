@@ -39,11 +39,3 @@ export async function apiResetPassword (data) {
         data
     })
 }
-
-export async function apiSignInAuth (data) {
-    return ApiService.fetchData({
-        url: `${process.env.REACT_APP_BACKEND_URL}/admin/login`,
-        method: 'post',
-        data
-    })
-}

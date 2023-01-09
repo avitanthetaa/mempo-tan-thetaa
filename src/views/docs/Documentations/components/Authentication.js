@@ -44,14 +44,6 @@ export async function apiSignUp (data) {
     })
 }
 
-export async function apiSignInAuth (data) {
-  return ApiService.fetchData({
-      url: '/admin/login',
-      method: 'post',
-      data
-  })
-}
-
 ...`}</SyntaxHighlighter>
       <p>Sign in implementation example:</p>
       <SyntaxHighlighter language="js">{`import { onSignInSuccess } from 'store/auth/sessionSlice'
@@ -108,8 +100,8 @@ const SignInForm = props => {
 	)
 `}</SyntaxHighlighter>
       <p>
-        You can also use composed <code>signIn</code> function propvided by our
-        <code>useAuth</code> hooks, located at
+        You can also use composed <code>signIn</code> function propvided by our{" "}
+        <code>useAuth</code> hooks, located at{" "}
         <code>src/utils/hooks/useAuth.js</code>
       </p>
       <div className="mt-10" id="overview">
@@ -119,7 +111,7 @@ const SignInForm = props => {
           endpoints at
           <code>src/services/AuthService.js</code> and edit the implementation
           at
-          <code>src/views/auth/*/xxxForm.js</code> &
+          <code>src/views/auth/*/xxxForm.js</code> &{" "}
           <code>src/store/auth/*.js</code> based on your application needed.
         </p>
       </div>

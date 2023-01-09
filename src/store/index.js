@@ -20,7 +20,7 @@ const store = configureStore({
 			immutableCheck: false,
 			serializableCheck: false,
 		}).concat(middlewares),
-	devTools: process.env.REACT_APP_BACKEND_URL === 'development',
+	devTools: process.env.NODE_ENV === 'development',
 })
 
 store.asyncReducers = {}
