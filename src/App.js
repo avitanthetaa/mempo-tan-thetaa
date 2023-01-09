@@ -20,6 +20,8 @@ if (environment !== "test") {
   mockServer({ environment });
 }
 
+// sent api to "/home"
+
 function App() {
   return (
     <Provider store={store}>

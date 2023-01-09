@@ -1,46 +1,104 @@
-import React from 'react'
-import { Input, Button, Checkbox, FormItem, FormContainer, Alert } from 'components/ui'
-import { PasswordInput, ActionLink } from 'components/shared'
-import useTimeOutMessage from 'utils/hooks/useTimeOutMessage'
-import { Field, Form, Formik } from 'formik'
-import * as Yup from 'yup'
-import useAuth from 'utils/hooks/useAuth'
+import React, { useState } from "react";
+import {
+  Input,
+  Button,
+  Checkbox,
+  FormItem,
+  FormContainer,
+  Alert,
+} from "components/ui";
+import { PasswordInput, ActionLink } from "components/shared";
+import useTimeOutMessage from "utils/hooks/useTimeOutMessage";
+import { Field, Form, Formik } from "formik";
+import * as Yup from "yup";
+import useAuth from "utils/hooks/useAuth";
+import { apiSignInCustom } from "services/AuthService";
 
 const validationSchema = Yup.object().shape({
-	userName: Yup.string().required('Please enter your user name'),
-	password: Yup.string().required('Please enter your password'),
-	rememberMe: Yup.bool()
-})
+  userName: Yup.string().required("Please enter your user name"),
+  password: Yup.string().required("Please enter your password"),
+  rememberMe: Yup.bool(),
+});
 
-const SignInForm = props => {
+const SignInForm = (props) => {
+  const {
+    disableSubmit = false,
+    className,
+    forgotPasswordUrl = "/forgot-password",
+    signUpUrl = "/sign-up",
+  } = props;
 
-	const { 
-		disableSubmit = false, 
-		className, 
-		forgotPasswordUrl = '/forgot-password',
-		signUpUrl = '/sign-up'
-	} = props
+  const [message, setMessage] = useTimeOutMessage();
 
-	const [message, setMessage] = useTimeOutMessage()
+  const { signIn } = useAuth();
 
-	const { signIn } = useAuth()
+  const onSignIn = async (values, setSubmitting) => {
+    const { email, password } = values;
+    setSubmitting(true);
 
-	const onSignIn = async (values, setSubmitting) => {
-		const { userName, password } = values
-		setSubmitting(true)
-		
-		const result = await signIn({ userName, password })
+    const result = await signIn({ email, password });
 
-		if (result.status === 'failed') {
-			setMessage(result.message)
-		}
+    if (result.status === "failed") {
+      setMessage(result.message);
+    }
 
-		setSubmitting(false)
-	}
+    setSubmitting(false);
+  };
 
-	return (
-		<div className={className}>
-			{message && <Alert className="mb-4" type="danger" showIcon>{message}</Alert>}
+  const [values, setValues] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+
+    setValues({
+      ...values,
+      [name]: value,
+    });
+  };
+
+  const fetchData = async () => {
+    const reqeustParam = { email: values.email, password: values.password };
+    try {
+      const resp = await apiSignInCustom(reqeustParam);
+      console.log("🚀 ~ fetchData ~ resp", resp);
+        if (resp.data) {
+          // ...do something
+		  console.log(resp)
+        }
+    } catch (errors) {
+      console.log(errors);
+    }
+  };
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    fetchData();
+  };
+
+  //   const onSignIn = async (values, setSubmitting) => {
+  //     const { userName, password } = values;
+  //     setSubmitting(true);
+
+  //     const result = await signIn({ userName, password });
+
+  //     if (result.status === "failed") {
+  //       setMessage(result.message);
+  //     }
+
+  //     setSubmitting(false);
+  //   };
+
+  return (
+    <div className={className}>
+      {message && (
+        <Alert className="mb-4" type="danger" showIcon>
+          {message}
+        </Alert>
+      )}
+      {/*
 			<Formik
 				initialValues={{
 					userName: '', 
@@ -103,8 +161,33 @@ const SignInForm = props => {
 					</Form>
 				)}
 			</Formik>
-		</div>
-	)
-}
+		 */}
 
-export default SignInForm
+      <form onSubmit={submitHandler}>
+        <p>
+          <input
+            type="email"
+            placeholder="Email"
+            value={values.email}
+            onChange={handleInputChange}
+            name="email"
+            label="Company"
+          />
+        </p>
+        <p>
+          <input
+            type="password"
+            placeholder="Password"
+            value={values.password}
+            onChange={handleInputChange}
+            name="password"
+            label="Company"
+          />
+        </p>
+        <button type="submit"> Submit </button>
+      </form>
+    </div>
+  );
+};
+
+export default SignInForm;

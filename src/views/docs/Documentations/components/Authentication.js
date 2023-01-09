@@ -48,7 +48,7 @@ export async function apiSignUp (data) {
       <p>Sign in implementation example:</p>
       <SyntaxHighlighter language="js">{`import { onSignInSuccess } from 'store/auth/sessionSlice'
 import { setUser } from 'store/auth/userSlice'
-import { apiSignIn } from 'services/AuthService'
+import { apiSignIn , apiSignInCustom } from 'services/AuthService'
 import appConfig from 'configs/app.config'
 import useTimeOutMessage from 'utils/hooks/useTimeOutMessage'
 import { Field, Form, Formik } from 'formik'
@@ -65,8 +65,32 @@ const SignInForm = props => {
 	const onSignIn = async (values, setSubmitting) => {
 		const { userName, password } = values
 		setSubmitting(true)
-		try {
-			const resp = await apiSignIn({ userName, password })
+		// try {
+		// 	const resp = await apiSignIn({ userName, password })
+		// 	if (resp.data) {
+		// 		setSubmitting(false)
+		// 		const { token } = resp.data
+		// 		// This will set the returning token to redux & localStorage
+		// 		dispatch(onSignInSuccess(token))
+		// 		// You can also set the user info to redux here, if it comes along with your sign in api 
+		// 		if(resp.data.user) {
+		// 			dispatch(setUser(resp.data.user || { 
+		// 				avatar: '', 
+		// 				userName: 'Anonymous', 
+		// 				authority: ['USER'], 
+		// 				email: ''
+		// 			}))
+		// 		}
+		// 		navigate(appConfig.authenticatedEntryPath)
+		// 	}
+		// } catch (errors) {
+		// 	setMessage(errors?.response?.data?.message || errors.toString())
+		// 	setSubmitting(false)
+		// }
+
+
+    try {
+			const resp = await apiSignInCustom({ email, password })
 			if (resp.data) {
 				setSubmitting(false)
 				const { token } = resp.data
@@ -75,10 +99,8 @@ const SignInForm = props => {
 				// You can also set the user info to redux here, if it comes along with your sign in api 
 				if(resp.data.user) {
 					dispatch(setUser(resp.data.user || { 
-						avatar: '', 
-						userName: 'Anonymous', 
-						authority: ['USER'], 
-						email: ''
+						email: '',
+            password:''
 					}))
 				}
 				navigate(appConfig.authenticatedEntryPath)
